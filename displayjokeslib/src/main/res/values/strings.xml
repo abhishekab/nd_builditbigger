@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DisplayJokesLib</string>
+    <string name="joke_especially_for_you">Joke especially for you:</string>
+    <string name="cant_fetch_joke">Oops! Can\'t fetch joke</string>
+</resources>
