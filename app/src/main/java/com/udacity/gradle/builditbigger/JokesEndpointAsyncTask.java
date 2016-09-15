@@ -20,22 +20,25 @@ import java.io.IOException;
 /**
  * Created by q4J1X056 on 16-09-2016.
  */
+
+// Help from http://stackoverflow.com/questions/12575068/how-to-get-the-result-of-onpostexecute-to-main-activity-because-asynctask-is-a
 public class JokesEndpointAsyncTask extends AsyncTask<Context, Void, String> {
-    private static JokesApi jokesApiService = null;
-    private Context context;
-    private ProgressBar progressBar;
-    JokesEndpointAsyncTask(ProgressBar progressBarMain)
-    {
-        this.progressBar=progressBarMain;
+    public interface AsyncResponse {
+        void processToStart();
+        void processFinish(String output);
     }
 
+    public AsyncResponse delegate = null;
+
+    public JokesEndpointAsyncTask(AsyncResponse delegate){
+        this.delegate = delegate;
+    }
+    private static JokesApi jokesApiService = null;
+    private Context context;
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if(progressBar!=null)
-        {
-            progressBar.setVisibility(View.VISIBLE);
-        }
+        delegate.processToStart();
     }
 
     @Override
@@ -59,9 +62,6 @@ public class JokesEndpointAsyncTask extends AsyncTask<Context, Void, String> {
 
             jokesApiService = builder.build();
         }
-
-
-
         try {
             return jokesApiService.getJoke().execute().getJoke();
         } catch (IOException e) {
@@ -72,18 +72,6 @@ public class JokesEndpointAsyncTask extends AsyncTask<Context, Void, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        if(progressBar!=null) {
-            progressBar.setVisibility(View.GONE);
-        }
-        if(result!=null && !result.isEmpty()){
-            Intent intent=new Intent(context, DisplayJokesActivity.class);
-        intent.putExtra(DisplayJokesActivity.KEY_EXTRA_JOKE,result);
-        context.startActivity(intent);
-
-        }else{
-            Toast.makeText(context, R.string.error_fetching_joke,Toast.LENGTH_SHORT).show();
-        }
-
-
+        delegate.processFinish(result);
     }
 }

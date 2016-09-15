@@ -15,7 +15,7 @@ import com.ab.displayjokeslib.DisplayJokesActivity;
 
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements JokesEndpointAsyncTask.AsyncResponse {
     ProgressBar mProgressBarMain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +54,26 @@ public class MainActivity extends ActionBarActivity {
 //        intent.putExtra(DisplayJokesActivity.KEY_EXTRA_JOKE,jokeTeller.getJoke());
 //        startActivity(intent);
 
-        new JokesEndpointAsyncTask(mProgressBarMain).execute(MainActivity.this);
+        new JokesEndpointAsyncTask(MainActivity.this).execute(MainActivity.this);
         //Toast.makeText(this, jokeTeller.getJoke(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void processToStart() {
+        mProgressBarMain.setVisibility(View.VISIBLE);
+    }
+    @Override
+    public void processFinish(String result)
+    {
+        mProgressBarMain.setVisibility(View.GONE);
+        if(result!=null && !result.isEmpty()){
+            Intent intent=new Intent(MainActivity.this, DisplayJokesActivity.class);
+            intent.putExtra(DisplayJokesActivity.KEY_EXTRA_JOKE,result);
+            startActivity(intent);
+
+        }else{
+            Toast.makeText(MainActivity.this, R.string.error_fetching_joke,Toast.LENGTH_SHORT).show();
+        }
     }
 
 
