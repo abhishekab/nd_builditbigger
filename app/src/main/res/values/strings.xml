@@ -4,4 +4,6 @@
     <string name="button_text">Tell Joke</string>
     <string name="action_settings">Settings</string>
     <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="endpoint_url" translatable="false">http://192.168.43.114:8080/_ah/api/</string>
+    <string name="error_fetching_joke">Oops! Error fetching the joke, Please try again!</string>
 </resources>

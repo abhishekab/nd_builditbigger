@@ -1,23 +1,27 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ab.displayjokeslib.DisplayJokesActivity;
-import com.example.JokeTeller;
+
 
 
 public class MainActivity extends ActionBarActivity {
-
+    ProgressBar mProgressBarMain;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mProgressBarMain=(ProgressBar)findViewById(R.id.progressBarMain);
     }
 
 
@@ -45,10 +49,12 @@ public class MainActivity extends ActionBarActivity {
 
     public void tellJoke(View view) {
 
-        JokeTeller jokeTeller=new JokeTeller();
-        Intent intent=new Intent(this, DisplayJokesActivity.class);
-        intent.putExtra(DisplayJokesActivity.KEY_EXTRA_JOKE,jokeTeller.getJoke());
-        startActivity(intent);
+//        JokeTeller jokeTeller=new JokeTeller();
+//        Intent intent=new Intent(this, DisplayJokesActivity.class);
+//        intent.putExtra(DisplayJokesActivity.KEY_EXTRA_JOKE,jokeTeller.getJoke());
+//        startActivity(intent);
+
+        new JokesEndpointAsyncTask(mProgressBarMain).execute(MainActivity.this);
         //Toast.makeText(this, jokeTeller.getJoke(), Toast.LENGTH_SHORT).show();
     }
 
