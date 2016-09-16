@@ -11,6 +11,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -24,6 +25,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     // Added for AdMob
     //compile project(':jokeslib')
+    androidTestCompile 'com.android.support:support-annotations:24.1.1'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
     compile project(':displayjokeslib')
     compile 'com.android.support:appcompat-v7:24.1.1'
     compile 'com.google.android.gms:play-services-ads:9.4.0'
