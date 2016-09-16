@@ -1,14 +1,8 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Pair;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import com.ab.displayjokeslib.DisplayJokesActivity;
 import com.ab.jokes.backend.jokesApi.JokesApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
